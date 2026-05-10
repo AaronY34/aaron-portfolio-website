@@ -1,0 +1,14 @@
+# Local secrets and machine-specific config
+node_modules/
+.next/
+dist/
+build/
+.venv/
+venv/
+__pycache__/
+.env
+.env.local
+*.log
+.DS_Store
+credentials/
+*.json
