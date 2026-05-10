@@ -30,6 +30,7 @@ The first working version should append one clear progress entry to a Google She
 Current files:
 - `docs/sheet-schema.md` defines the Google Sheet columns.
 - `scripts/add-progress-entry.ps1` appends one progress entry to a local CSV staging file.
+- `scripts/add-git-progress-entry.ps1` builds a progress entry from Git commits and modified files.
 - `config/progress-tracker.example.json` shows non-secret configuration values for a future Google Sheets sync.
 - `templates/daily-progress-entry.json` gives a copyable daily entry shape.
 
@@ -68,12 +69,30 @@ This creates or updates:
 01-progress-tracking-agent/data/progress-log.csv
 ```
 
+## Add A Git Evidence Progress Entry
+
+This is the preferred development-progress workflow. It uses Git commits from the selected date as the evidence source. When the selected date is today, it also includes currently modified files as in-progress evidence.
+
+From the repository root:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\01-progress-tracking-agent\scripts\add-git-progress-entry.ps1 `
+  -Date "2026-05-10" `
+  -NextStep "Create Google Sheets append support after the sheet exists."
+```
+
+The generated row uses:
+- commit subjects for `Completed Work`
+- committed and modified file paths in `Notes`
+- `git-evidence` for `Source`
+
 ## Implementation Stages
 
 1. Local CSV staging workflow.
-2. Manual Google Sheet setup using the documented columns.
-3. Google Sheets append workflow after credentials and sheet ID are available.
-4. Basic validation tests if the script grows beyond simple row creation.
+2. Git evidence workflow using commits and modified files.
+3. Manual Google Sheet setup using the documented columns.
+4. Google Sheets append workflow after credentials and sheet ID are available.
+5. Basic validation tests if the script grows beyond simple row creation.
 
 ## Next Step
 

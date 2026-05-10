@@ -26,6 +26,7 @@ Expected output:
 Current implementation:
 - The first working path appends rows to a local gitignored CSV staging file.
 - The CSV uses the same columns planned for Google Sheets so the sync step can be added later without changing the daily entry shape.
+- Development progress can be generated from Git evidence: commit subjects, committed files, and current modified files.
 
 ### 2. Portfolio Website
 

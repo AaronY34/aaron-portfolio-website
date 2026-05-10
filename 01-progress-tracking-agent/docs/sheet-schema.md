@@ -14,7 +14,7 @@ The sheet should be named `Progress Log` unless there is already a better name i
 | `Blockers` | No | Anything slowing progress. Use `None` when clear. | `Need Google Sheet ID.` |
 | `Next Step` | Yes | The next concrete action. | `Create Google Sheets sync script.` |
 | `Notes` | No | Extra context, links, or decisions. | `Kept first version dependency-free.` |
-| `Source` | Yes | Where the row came from. | `local-csv` |
+| `Source` | Yes | Where the row came from. | `local-csv` or `git-evidence` |
 | `Created At` | Yes | Timestamp for when the row was created. | `2026-05-10T17:40:00Z` |
 
 ## Daily Entry Rule
@@ -25,6 +25,15 @@ Good entries are:
 - Specific enough to remember what changed.
 - Short enough to scan later.
 - Honest about blockers and next steps.
+
+## Evidence Rule
+
+The Progress Tracking Agent should prefer repository evidence over memory. For development work, use:
+- Git commit subjects as the completed-work source.
+- Files changed in those commits as supporting evidence.
+- Current modified files as in-progress evidence when the entry date is today and work has not been committed yet.
+
+Rows created this way should use `git-evidence` as the source.
 
 ## First Implementation Boundary
 

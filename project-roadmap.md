@@ -21,6 +21,7 @@ Initial tasks:
 - Decide what counts as a daily progress entry. Status: done.
 - Create a minimal local script or workflow to add one row. Status: done for local CSV staging.
 - Add README instructions for running and testing the workflow. Status: done.
+- Use Git commits and modified files as the evidence source for development progress. Status: done for local CSV staging.
 - Create the actual Google Sheet and add append/sync support. Status: next.
 
 ## Phase 3: Portfolio Website

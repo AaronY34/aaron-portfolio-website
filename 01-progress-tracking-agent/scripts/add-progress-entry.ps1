@@ -8,6 +8,7 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$NextStep,
     [string]$Notes = "",
+    [string]$Source = "local-csv",
     [string]$OutputPath = ""
 )
 
@@ -54,7 +55,7 @@ $entry = [pscustomobject]@{
     Blockers = $(if ([string]::IsNullOrWhiteSpace($Blockers)) { "None" } else { $Blockers.Trim() })
     "Next Step" = $NextStep.Trim()
     Notes = $Notes.Trim()
-    Source = "local-csv"
+    Source = $(if ([string]::IsNullOrWhiteSpace($Source)) { "local-csv" } else { $Source.Trim() })
     "Created At" = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
 }
 
