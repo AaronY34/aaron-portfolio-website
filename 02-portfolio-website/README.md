@@ -1,38 +1,89 @@
-﻿# Portfolio Website
+# Portfolio Website
 
 ## Goal
 
-Build a personal website to show projects, profile, resume, and case studies.
+Build a clean personal portfolio website for job search positioning and project showcase.
 
-The website will later be deployed to Vercel. For now, this folder is only a placeholder for planning and future implementation.
+Positioning:
 
-## Intended Website Sections
+```text
+IT Implementation | Workflow Automation | Data Analysis | AI-assisted Systems
+```
 
-Possible sections include:
-- Home or profile summary
-- Projects
-- Case studies
-- Resume
-- Skills
-- Contact
+This subproject is separate from `01-progress-tracking-agent`. It contains the website source only. Non-code assets such as screenshots, resume PDFs, case study exports, and profile images should stay in the Google Drive project folder unless there is a clear reason to commit optimized web assets.
 
-## Storage Notes
+## Tech Stack
 
-Code and website source files should live in this local repository.
+- Next.js
+- TypeScript
+- Tailwind CSS
+- Vercel-ready project structure
 
-Portfolio assets that need to be reused across devices should live in Google Drive, such as:
-- Screenshots
-- Project images
-- Resume PDFs
-- Case study exports
-- Brand or profile assets
+## Current Scope
 
-## What Not To Do Yet
+This is the simplest working website structure. It includes:
 
-- Do not create a frontend framework until implementation begins.
-- Do not deploy yet.
-- Do not copy large media assets into the code repository unless there is a clear reason.
+- A Next.js app shell.
+- A single home page.
+- Basic metadata.
+- Tailwind styling.
+- Structured portfolio content in `src/data/profile.ts`.
 
-## Next Step
+It does not include deployment setup, analytics, CMS, external APIs, or large media assets yet.
 
-Create a content inventory: profile summary, project list, resume source, screenshots, and case study notes.
+## Folder Structure
+
+```text
+02-portfolio-website/
+  README.md
+  next.config.mjs
+  package.json
+  postcss.config.mjs
+  tailwind.config.ts
+  tsconfig.json
+  public/
+  src/
+    app/
+      globals.css
+      layout.tsx
+      page.tsx
+    data/
+      profile.ts
+```
+
+## Run Locally
+
+From this folder:
+
+```bash
+npm install
+npm run dev
+```
+
+Then open:
+
+```text
+http://localhost:3000
+```
+
+## Build Check
+
+```bash
+npm run build
+```
+
+## Vercel Notes
+
+When ready to deploy:
+
+1. Push the repository to GitHub.
+2. Create a Vercel project.
+3. Set the project root to `02-portfolio-website`.
+4. Use the default Next.js build settings.
+
+## Next Content Tasks
+
+- Write a sharper profile summary.
+- Add real project entries and case study notes.
+- Decide whether the resume should be a page, PDF link, or both.
+- Add screenshots or project images from Google Drive only after choosing final assets.
