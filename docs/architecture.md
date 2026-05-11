@@ -10,23 +10,22 @@ The local repository contains code, scripts, automation logic, prompts, template
 
 ### 1. Progress Tracking Agent
 
-Purpose: Record daily project progress into a Google Sheet.
+Purpose: Record daily project progress as markdown logs committed to the repository.
 
 Expected inputs:
-- Date
-- Project or subproject name
-- Work completed
-- Blockers
-- Next step
-- Optional time spent or confidence level
+- Git commits for the selected date
+- Working tree files modified on the selected date
+- Optional human note at `shared/project-notes/daily-note.md`
 
-Expected output:
-- A new row in a Google Sheet for each progress update.
+Expected outputs:
+- A daily markdown log at `docs/progress/daily/YYYY-MM-DD.md`
+- An updated index at `docs/progress/progress-index.md`
 
 Current implementation:
-- The first working path appends rows to a local gitignored CSV staging file.
-- The CSV uses the same columns planned for Google Sheets so the sync step can be added later without changing the daily entry shape.
-- Development progress can be generated from Git evidence: commit subjects, committed files, and current modified files.
+- `01-progress-tracking-agent/src/main.py` generates deterministic markdown logs from Git evidence.
+- The generator avoids OpenAI and Google Sheets dependencies in V1.
+- Status is derived from evidence: `Done` for commit activity, `Partial` for modified-file activity only, and `No Activity` when neither exists.
+- Future V2 work may add AI summaries and Google Sheet export after the local markdown workflow is stable.
 
 ### 2. Portfolio Website
 

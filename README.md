@@ -5,7 +5,7 @@ Job Search Agent OS is a long-term project for building a personal job search wo
 The project has three connected parts:
 
 1. **Progress Tracking Agent**
-   Automatically records daily project progress into a Google Sheet. This is also the first automation coding practice project.
+   Generates daily markdown progress logs from Git evidence. This is also the first automation coding practice project.
 
 2. **Portfolio Website**
    A personal website for projects, profile, resume, and case studies. It will later be deployed to Vercel.
@@ -64,8 +64,8 @@ job-search-agent-os/
 
 ## Current Status
 
-The project is in the initialization stage. The first goal is to create a clean folder structure and clear documentation before implementing any code.
+The project foundation is in place. The current active implementation is the Progress Tracking Agent V1, which writes local markdown logs into the repository instead of using Google Sheets.
 
 ## Next Step
 
-Start with the Progress Tracking Agent. Define the Google Sheet columns, the daily progress entry format, and the simplest local script or workflow needed to append one daily entry.
+Run the Progress Tracking Agent manually, review the generated daily markdown log, and commit `docs/progress/daily/YYYY-MM-DD.md` plus `docs/progress/progress-index.md`.

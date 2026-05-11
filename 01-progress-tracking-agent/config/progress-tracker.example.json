@@ -1,6 +1,0 @@
-{
-  "sheetName": "Progress Log",
-  "googleSheetId": "replace-with-sheet-id-when-sync-is-added",
-  "defaultSubproject": "01-progress-tracking-agent",
-  "source": "local-csv"
-}

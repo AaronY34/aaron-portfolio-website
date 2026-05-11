@@ -20,9 +20,9 @@ This repository is the local development home for a long-term, human-in-the-loop
 - Document decisions as they are made.
 
 ## Subprojects
-1. `01-progress-tracking-agent` - Daily progress tracking automation into Google Sheets.
+1. `01-progress-tracking-agent` - Daily progress log generation into repository markdown files.
 2. `02-portfolio-website` - Personal portfolio website for projects, profile, resume, and case studies.
 3. `03-job-search-automation` - Human-in-the-loop job discovery, tracking, document tailoring, and follow-up system.
 
 ## Current First Task
-Initialize folder structure and documentation only. No code implementation yet.
+Use `01-progress-tracking-agent` to generate local markdown daily progress logs from Git evidence. Do not add Google Sheets or OpenAI API dependencies until a later V2 is requested.

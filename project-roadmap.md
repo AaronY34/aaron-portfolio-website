@@ -14,15 +14,17 @@ Tasks:
 
 ## Phase 2: Progress Tracking Agent
 
-Goal: Build the first automation practice project: a simple agent or script that records daily progress into a Google Sheet.
+Goal: Build the first automation practice project: a simple local generator that records daily progress as markdown logs in the repository.
 
 Initial tasks:
-- Design the Google Sheet columns. Status: done.
-- Decide what counts as a daily progress entry. Status: done.
-- Create a minimal local script or workflow to add one row. Status: done for local CSV staging.
-- Add README instructions for running and testing the workflow. Status: done.
-- Use Git commits and modified files as the evidence source for development progress. Status: done for local CSV staging.
-- Create the actual Google Sheet and add append/sync support. Status: next.
+- Define the daily markdown log location. Status: done.
+- Use Git commits and modified files as the evidence source for development progress. Status: done.
+- Optionally include `shared/project-notes/daily-note.md` when it exists. Status: done.
+- Generate `docs/progress/daily/YYYY-MM-DD.md`. Status: done.
+- Maintain `docs/progress/progress-index.md`. Status: done.
+- Avoid overwriting existing logs unless `--force` is passed. Status: done.
+- Add README and usage instructions. Status: done.
+- Add AI summary and Google Sheet export later as V2. Status: later.
 
 ## Phase 3: Portfolio Website
 

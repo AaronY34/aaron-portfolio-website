@@ -1,99 +1,69 @@
-﻿# Progress Tracking Agent
+# Progress Tracking Agent
 
 ## Goal
 
-Automatically record daily project progress into a Google Sheet.
+Generate local daily progress logs as markdown files inside this GitHub repository.
 
-This is the first automation coding practice project inside Job Search Agent OS. It should stay simple at the beginning and grow only after the basic workflow works reliably.
+This is the first automation coding practice project inside Job Search Agent OS. V1 intentionally avoids Google Sheets, OpenAI, and extra dependencies. It uses deterministic Git evidence so progress logs stay reviewable and easy to commit.
 
-## What This Agent Should Do
-
-The agent should help capture daily progress such as:
-- Date
-- Subproject worked on
-- Completed work
-- Blockers
-- Next step
-- Notes or links
-
-The first working version should append one clear progress entry to a Google Sheet.
-
-## What This Agent Should Not Do Yet
-
-- Do not create a complex app.
-- Do not add unnecessary frameworks.
-- Do not automate unrelated job search tasks.
-- Do not store credentials in Git or Google Drive.
-
-## Expected Future Files
-
-Current files:
-- `docs/sheet-schema.md` defines the Google Sheet columns.
-- `scripts/add-progress-entry.ps1` appends one progress entry to a local CSV staging file.
-- `scripts/add-git-progress-entry.ps1` builds a progress entry from Git commits and modified files.
-- `config/progress-tracker.example.json` shows non-secret configuration values for a future Google Sheets sync.
-- `templates/daily-progress-entry.json` gives a copyable daily entry shape.
-
-Generated local data:
-- `data/progress-log.csv` is created by the script and is gitignored.
-
-## Sheet Columns
-
-The first sheet uses these columns:
-- `Date`
-- `Subproject`
-- `Completed Work`
-- `Blockers`
-- `Next Step`
-- `Notes`
-- `Source`
-- `Created At`
-
-See `docs/sheet-schema.md` for details.
-
-## Add A Local Progress Entry
+## Current Workflow
 
 From the repository root:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\01-progress-tracking-agent\scripts\add-progress-entry.ps1 `
-  -Subproject "01-progress-tracking-agent" `
-  -CompletedWork "Defined the local CSV staging workflow." `
-  -NextStep "Add Google Sheets append support after the sheet exists." `
-  -Notes "First version intentionally has no external dependencies."
+```bash
+python3 01-progress-tracking-agent/src/main.py
 ```
 
-This creates or updates:
+The script creates a daily log:
 
 ```text
-01-progress-tracking-agent/data/progress-log.csv
+docs/progress/daily/YYYY-MM-DD.md
 ```
 
-## Add A Git Evidence Progress Entry
+It also updates the index:
 
-This is the preferred development-progress workflow. It uses Git commits from the selected date as the evidence source. When the selected date is today, it also includes currently modified files as in-progress evidence.
-
-From the repository root:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\01-progress-tracking-agent\scripts\add-git-progress-entry.ps1 `
-  -Date "2026-05-10" `
-  -NextStep "Create Google Sheets append support after the sheet exists."
+```text
+docs/progress/progress-index.md
 ```
 
-The generated row uses:
-- commit subjects for `Completed Work`
-- committed and modified file paths in `Notes`
-- `git-evidence` for `Source`
+## What The Script Does
 
-## Implementation Stages
+1. Reads Git commits for the selected date.
+2. Detects working tree files modified on the selected date.
+3. Optionally reads `shared/project-notes/daily-note.md` if it exists.
+4. Generates a markdown daily log.
+5. Saves the log under `docs/progress/daily/`.
+6. Updates `docs/progress/progress-index.md`.
+7. Refuses to overwrite an existing daily log unless `--force` is passed.
 
-1. Local CSV staging workflow.
-2. Git evidence workflow using commits and modified files.
-3. Manual Google Sheet setup using the documented columns.
-4. Google Sheets append workflow after credentials and sheet ID are available.
-5. Basic validation tests if the script grows beyond simple row creation.
+## Status Rules
 
-## Next Step
+- `Done`: commits exist for the selected date.
+- `Partial`: no commits exist, but working tree files were modified on the selected date.
+- `No Activity`: no commits or modified working tree files were detected.
 
-Create the Google Sheet with the documented columns, then add a sync or append path that uses a local, gitignored credential file.
+The script does not invent progress. It uses commit messages, committed file paths, modified file paths, and the optional daily note as its only evidence.
+
+## Optional Flags
+
+```bash
+python3 01-progress-tracking-agent/src/main.py --date 2026-05-10
+python3 01-progress-tracking-agent/src/main.py --force
+python3 01-progress-tracking-agent/src/main.py --project-root /path/to/job-search-agent-os
+```
+
+See `01-progress-tracking-agent/docs/usage.md` for details.
+
+## Current Files
+
+- `src/main.py` generates markdown daily logs from Git evidence.
+- `docs/usage.md` explains manual usage and commit steps.
+- `requirements.txt` records that V1 has no third-party Python dependencies.
+- `../../docs/progress/daily/.gitkeep` keeps the daily log folder in Git.
+- `../../docs/progress/progress-index.md` links to generated daily logs.
+
+## Later V2 Ideas
+
+- Add AI-assisted summary generation after the deterministic workflow is reliable.
+- Add Google Sheet export after local markdown logs are stable.
+- Add tests if the script grows beyond simple deterministic file generation.
