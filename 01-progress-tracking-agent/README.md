@@ -58,6 +58,7 @@ See `01-progress-tracking-agent/docs/usage.md` for details.
 
 - `src/main.py` generates markdown daily logs from Git evidence.
 - `docs/usage.md` explains manual usage and commit steps.
+- `docs/github-actions-automation.md` explains the cloud automation workflow.
 - `requirements.txt` records that V1 has no third-party Python dependencies.
 - `../../docs/progress/daily/.gitkeep` keeps the daily log folder in Git.
 - `../../docs/progress/progress-index.md` links to generated daily logs.

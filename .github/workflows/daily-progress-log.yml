@@ -1,0 +1,76 @@
+name: Daily Progress Log
+
+on:
+  schedule:
+    # GitHub Actions cron runs in UTC. These two times cover 23:59 in
+    # America/Vancouver across daylight saving time and standard time.
+    - cron: "59 6 * * *"
+    - cron: "59 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-progress-log
+  cancel-in-progress: false
+
+jobs:
+  generate-daily-progress-log:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Resolve Vancouver date
+        id: vancouver-time
+        shell: bash
+        run: |
+          local_hour="$(TZ=America/Vancouver date +%H)"
+          local_date="$(TZ=America/Vancouver date +%F)"
+
+          echo "date=${local_date}" >> "$GITHUB_OUTPUT"
+
+          if [[ "${{ github.event_name }}" == "schedule" && "${local_hour}" != "23" ]]; then
+            echo "run_tracker=false" >> "$GITHUB_OUTPUT"
+            echo "Skipping scheduled run because local Vancouver hour is ${local_hour}, not 23."
+          else
+            echo "run_tracker=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Generate daily progress log
+        if: steps.vancouver-time.outputs.run_tracker == 'true'
+        run: python3 01-progress-tracking-agent/src/main.py --date "${{ steps.vancouver-time.outputs.date }}" --force
+
+      - name: Check for progress log changes
+        if: steps.vancouver-time.outputs.run_tracker == 'true'
+        id: progress-changes
+        shell: bash
+        run: |
+          if [[ -n "$(git status --porcelain docs/progress)" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push progress log
+        if: steps.vancouver-time.outputs.run_tracker == 'true' && steps.progress-changes.outputs.changed == 'true'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/progress
+          git commit -m "Add daily progress log for ${{ steps.vancouver-time.outputs.date }}"
+          git push origin HEAD:main
+
+      - name: No progress log changes
+        if: steps.vancouver-time.outputs.run_tracker == 'true' && steps.progress-changes.outputs.changed == 'false'
+        run: echo "No docs/progress changes detected."
