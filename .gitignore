@@ -27,3 +27,6 @@ secrets/
 # Progress Tracking Agent local generated data
 01-progress-tracking-agent/data/*.csv
 01-progress-tracking-agent/data/*.bak
+
+.vercel
+.env*.local
