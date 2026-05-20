@@ -1,10 +1,12 @@
 import Image from "next/image";
+import { NarrativeScrollController } from "@/components/NarrativeScrollController";
 import { profile } from "@/data/profile";
 
 type ProjectMoment = {
   title: string;
   caption: string;
   image: string;
+  imageFit?: "cover" | "contain";
   href?: string;
 };
 
@@ -34,7 +36,7 @@ const chapters: Chapter[] = [
       {
         title: "UGL Operations System",
         caption: "Inventory, event, and operational workflow design.",
-        image: "/images/architectural-hero.png",
+        image: "/images/project-ugl-demo-v2.png",
       },
       {
         title: "ALBA ERP / CRM Implementation",
@@ -82,7 +84,8 @@ const chapters: Chapter[] = [
       {
         title: "Drone Data Pipeline",
         caption: "Using UAV systems to collect, process, and understand spatial data.",
-        image: "/images/architectural-human-space.png",
+        image: "/images/project-drone-research.png",
+        href: "https://dl.acm.org/doi/abs/10.1145/3671127.3698172",
       },
     ],
   },
@@ -103,9 +106,10 @@ const chapters: Chapter[] = [
     ],
     projects: [
       {
-        title: "Si Shi",
+        title: "\u56db\u6642 Si Shi",
         caption: "A reflection on time, rhythm, and seasonal experience through digital space.",
-        image: "/images/architectural-warm-arch.png",
+        image: "/images/project-si-shi.png",
+        imageFit: "contain",
         href: "https://www.iv-space.com/",
       },
     ],
@@ -114,40 +118,63 @@ const chapters: Chapter[] = [
 
 function AboutSection() {
   return (
-    <section id="about" className="about-section snap-section">
-      <Image
-        src="/images/about-atmosphere-v3.png"
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-center"
-      />
-      <div className="about-mobile-readability" />
+    <section id="about" className="about-section snap-section" data-scroll-section data-scroll-order="1">
       <div className="about-copy">
-        <h2>About Me</h2>
-        <p>I work at the intersection of psychology, business systems, data, and automation.</p>
-        <p>
-          Most of my work begins with messy processes:
-          <br />
-          unclear responsibilities,
-          <br />
-          manual repetition,
-          <br />
-          scattered information,
-          <br />
-          and too much attention spent on the wrong things.
-        </p>
-        <p>I&apos;m interested in how structure changes action.</p>
-        <p>
-          How workflows reduce friction.
-          <br />
-          How systems protect attention.
-          <br />
-          How technology can support people
-          <br />
-          without replacing human judgment.
-        </p>
+        <div>
+          <h2>About Me</h2>
+          <p>I work at the intersection of psychology, business systems, data, and automation.</p>
+          <p>
+            Most of my work begins with messy processes:
+            <br />
+            unclear responsibilities,
+            <br />
+            manual repetition,
+            <br />
+            scattered information,
+            <br />
+            and too much attention spent on the wrong things.
+          </p>
+          <p>I&apos;m interested in how structure changes action.</p>
+          <p>
+            How workflows reduce friction.
+            <br />
+            How systems protect attention.
+            <br />
+            How technology can support people
+            <br />
+            without replacing human judgment.
+          </p>
+        </div>
+      </div>
+      <div className="about-image-panel">
+        <Image
+          src="/images/about-architecture-vertical-clean.png"
+          alt=""
+          fill
+          priority
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          className="about-image object-cover"
+        />
+      </div>
+    </section>
+  );
+}
+
+function ProcedureIntroSection({ chapter }: { chapter: Chapter }) {
+  return (
+    <section className="about-section procedure-intro-section snap-section" data-scroll-section data-scroll-order="2">
+      <div className="procedure-intro-copy">
+        <ChapterText chapter={chapter} />
+      </div>
+      <div className="about-image-panel">
+        <Image
+          src="/images/about-architecture-vertical-clean.png"
+          alt=""
+          fill
+          priority
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          className="about-image object-cover"
+        />
       </div>
     </section>
   );
@@ -156,14 +183,21 @@ function AboutSection() {
 function AtmosphericSection({
   id,
   image,
+  scrollOrder,
   children,
 }: {
   id?: string;
   image: string;
+  scrollOrder: number;
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className="snap-section relative min-h-screen overflow-hidden">
+    <section
+      id={id}
+      className="snap-section relative min-h-screen overflow-hidden"
+      data-scroll-section
+      data-scroll-order={scrollOrder}
+    >
       <Image src={image} alt="" fill sizes="100vw" className="object-cover" />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,245,237,0.94),rgba(248,245,237,0.64)_42%,rgba(248,245,237,0.12)),linear-gradient(180deg,rgba(248,245,237,0.15),rgba(248,245,237,0.28))]" />
       <div className="relative mx-auto flex min-h-screen max-w-6xl items-center justify-start px-6 py-24 sm:px-10">
@@ -195,11 +229,17 @@ function ChapterText({ chapter }: { chapter: Chapter }) {
 function ProjectMomentView({ project, index }: { project: ProjectMoment; index: number }) {
   return (
     <article
-      className="project-moment snap-section flex min-h-screen flex-col justify-center py-20 lg:sticky lg:top-0"
+      className="project-moment snap-section flex min-h-screen flex-col justify-center px-6 py-20 sm:px-10 lg:sticky lg:top-0 lg:px-[6vw]"
       style={{ zIndex: index + 1 }}
     >
-      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[4px]">
-        <Image src={project.image} alt="" fill sizes="(min-width: 1024px) 45vw, 92vw" className="object-cover" />
+      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[4px] bg-[var(--surface-soft)]">
+        <Image
+          src={project.image}
+          alt=""
+          fill
+          sizes="(min-width: 1024px) 45vw, 92vw"
+          className={project.imageFit === "contain" ? "object-contain p-3" : "object-cover"}
+        />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(248,245,237,0.04),rgba(248,245,237,0.16))]" />
       </div>
       <div className="mt-7 max-w-[520px]">
@@ -214,21 +254,23 @@ function ProjectMomentView({ project, index }: { project: ProjectMoment; index: 
             rel="noreferrer"
             className="mt-5 inline-flex text-sm text-[var(--accent-warm)] transition hover:text-[var(--text-main)]"
           >
-            View project ↗
+            View project {"\u2197"}
           </a>
         ) : (
-          <span className="mt-5 inline-flex text-sm text-[var(--accent-warm)]">View project ↗</span>
+          <span className="mt-5 inline-flex text-sm text-[var(--accent-warm)]">View project {"\u2197"}</span>
         )}
       </div>
     </article>
   );
 }
 
-function ChapterSection({ chapter }: { chapter: Chapter }) {
+function ChapterSection({ chapter, orderStart }: { chapter: Chapter; orderStart: number }) {
   const projectColumn = (
     <div className={`${chapter.reverse ? "lg:order-1" : "lg:order-2"} lg:col-span-1`}>
       {chapter.projects.map((project, index) => (
-        <ProjectMomentView key={project.title} project={project} index={index} />
+        <div key={project.title} data-scroll-section data-scroll-order={orderStart + index}>
+          <ProjectMomentView project={project} index={index} />
+        </div>
       ))}
     </div>
   );
@@ -245,7 +287,7 @@ function ChapterSection({ chapter }: { chapter: Chapter }) {
       className="chapter-section relative"
       style={{ minHeight: `${Math.max(chapter.projects.length, 1) * 100}vh` }}
     >
-      <div className="mx-auto grid max-w-6xl gap-12 px-6 sm:px-10 lg:grid-cols-2 lg:gap-20">
+      <div className="chapter-grid grid min-h-screen gap-12 px-6 sm:px-10 lg:grid-cols-2 lg:gap-0 lg:px-0">
         {textColumn}
         {projectColumn}
       </div>
@@ -254,9 +296,12 @@ function ChapterSection({ chapter }: { chapter: Chapter }) {
 }
 
 export default function Home() {
+  let projectOrder = 3;
+
   return (
     <main className="narrative-root bg-[var(--bg-main)] text-[var(--text-main)]">
-      <section className="snap-section relative min-h-screen px-6 text-center">
+      <NarrativeScrollController />
+      <section className="snap-section relative min-h-screen px-6 text-center" data-scroll-section data-scroll-order="0">
         <div className="absolute left-1/2 top-[58vh] w-full max-w-[900px] -translate-x-1/2 -translate-y-1/2 px-6">
           <h1 className="text-[clamp(3.25rem,6vw,5.5rem)] font-medium leading-[1.1] tracking-[-0.045em] text-[var(--text-main)]">
             Hello, I&apos;m Aaron.
@@ -273,19 +318,23 @@ export default function Home() {
           aria-label="Scroll to about section"
           className="hero-scroll-cue text-2xl text-[var(--text-muted)] transition hover:text-[var(--accent-warm)]"
         >
-          ↓
+          {"\u2193"}
         </a>
       </section>
 
       <AboutSection />
+      <ProcedureIntroSection chapter={chapters[0]} />
 
       <div id="systems">
-        {chapters.map((chapter) => (
-          <ChapterSection key={chapter.id} chapter={chapter} />
-        ))}
+        {chapters.map((chapter) => {
+          const orderStart = projectOrder;
+          projectOrder += chapter.projects.length;
+
+          return <ChapterSection key={chapter.id} chapter={chapter} orderStart={orderStart} />;
+        })}
       </div>
 
-      <AtmosphericSection id="contact" image="/images/architectural-warm-arch.png">
+      <AtmosphericSection id="contact" image="/images/architectural-warm-arch.png" scrollOrder={projectOrder}>
         <p>Over time, I became less interested in what systems can do for us,</p>
         <p className="mt-7">and more interested in what systems enable us to preserve.</p>
         <p className="mt-7">

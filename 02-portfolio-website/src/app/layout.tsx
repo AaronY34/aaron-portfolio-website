@@ -4,7 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Aaron Yang | Reducing Complexity Through Systems",
+  title: "Aaron Yang",
   description:
     "Systems-oriented portfolio for IT implementation, workflow automation, data analysis, and AI-assisted execution systems.",
 };
