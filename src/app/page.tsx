@@ -63,11 +63,6 @@ const chapters: Chapter[] = [
         caption: "Extending implementation work with dashboards, process automation, and workflow support.",
         image: "/images/architectural-warm-arch.png",
       },
-      {
-        title: "Job Search Agent OS",
-        caption: "A human-in-the-loop system for tracking, preparing, and improving job applications.",
-        image: "/images/architectural-hero.png",
-      },
     ],
   },
   {

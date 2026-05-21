@@ -17,7 +17,7 @@ export const profile = {
   resumeHighlights: [
     "Implementation-minded problem solver focused on turning messy workflows into usable systems.",
     "Comfortable documenting processes, structuring data, and building repeatable operating procedures.",
-    "Currently building Job Search Agent OS as a public project portfolio and workflow automation system.",
+    "Currently building a public portfolio around implementation, automation, data workflows, and human-centered systems.",
   ],
   skills: [
     "Workflow mapping",
@@ -50,7 +50,7 @@ export const capabilities = [
   {
     title: "AI-assisted Execution Systems",
     description:
-      "Design human-in-the-loop systems for research, job search, documentation, and structured follow-through.",
+      "Design human-in-the-loop systems for research, documentation, operations, and structured follow-through.",
   },
 ];
 

@@ -16,40 +16,6 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "job-search-agent-os",
-    title: "Job Search Agent OS",
-    status: "In Progress",
-    category: "AI-assisted systems",
-    summary:
-      "A human-in-the-loop operating system for organizing a job search across progress tracking, portfolio work, and future application workflows.",
-    problem:
-      "Job search work is repetitive, emotionally heavy, and easy to lose track of across resumes, job descriptions, applications, and follow-ups.",
-    role: "System designer and builder",
-    tools: ["Next.js", "Python", "Markdown", "Git", "AI-assisted workflow design"],
-    focus: ["Workflow design", "Documentation", "AI-assisted process support"],
-    outcome:
-      "Repository structure, project documentation, and progress logging workflow are in place.",
-    currentProgress:
-      "Subprojects are organized, daily session notes are active, and the portfolio is being redesigned as the visible systems narrative.",
-  },
-  {
-    slug: "progress-tracking-agent",
-    title: "Progress Tracking Agent",
-    status: "In Progress",
-    category: "Workflow automation",
-    summary:
-      "A local and GitHub Actions-supported tracker that turns session notes and Git evidence into daily markdown progress logs.",
-    problem:
-      "Project progress can disappear into scattered commits and chat notes unless the evidence is converted into readable daily updates.",
-    role: "Automation designer and implementer",
-    tools: ["Python", "GitHub Actions", "Git", "Markdown"],
-    focus: ["Python", "GitHub Actions", "Markdown automation"],
-    outcome:
-      "Daily progress logs can be generated from repository evidence without Google Sheets or OpenAI APIs.",
-    currentProgress:
-      "The first local markdown workflow is implemented and documented, with future integrations intentionally deferred.",
-  },
-  {
     slug: "inventory-forecasting-dashboard",
     title: "Inventory Forecasting Dashboard",
     status: "In Progress",

@@ -1,23 +1,11 @@
-﻿# external repositories
-external-repos/
-
-# environment variables
-.env
-.env.*
-!.env.example
-
-# dependencies
-node_modules/
-
-# build outputs
 .next/
+node_modules/
 out/
 dist/
-build/
+coverage/
 
-# vercel
-.vercel/
+.vercel
+.env*.local
+.env
 
-# system files
 .DS_Store
-Thumbs.db
