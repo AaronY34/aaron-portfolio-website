@@ -8,9 +8,10 @@ const LOCK_MS = 650;
 export function NarrativeScrollController() {
   useEffect(() => {
     const finePointer = window.matchMedia("(pointer: fine)").matches;
+    const desktopLayout = window.matchMedia("(min-width: 1024px)").matches;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (!finePointer || reduceMotion) {
+    if (!desktopLayout || !finePointer || reduceMotion) {
       return;
     }
 

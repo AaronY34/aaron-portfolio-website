@@ -37,12 +37,14 @@ const chapters: Chapter[] = [
     projects: [
       {
         title: "UGL Operation System",
-        caption: "Inventory, event, and operational workflow design.",
+        caption:
+          "Day-to-day operations organized into clearer workflows for inventory, events, sales tracking, and front-desk procedures. Repeated work became easier to follow, record, and hand over. A practical structure for reducing workplace friction.",
         image: "/images/project-ugl-operation-system.png",
       },
       {
         title: "ALBA CRM Implementation",
-        caption: "From manual Excel processes to structured business systems.",
+        caption:
+          "Scattered Excel records became a customized multi-user ERP / CRM system. Client records, consultant workflows, dashboards, and service processes were connected in one shared space. The business workflow became smoother, clearer, and easier to scale.",
         image: "/images/project-alba-erp-crm-implementation.png",
       },
     ],
@@ -63,7 +65,7 @@ const chapters: Chapter[] = [
       {
         title: "ALBA CRM Automation",
         caption:
-          "A second-stage upgrade that moved profile collection from consultant-only operation to guided student-side participation.",
+          "The structured CRM became a more active workflow system. Guided intake, client-side participation, and automation features reduced repeated consultant-only data entry. Human review remained, but less attention was spent on collecting information manually.",
         image: "/images/projects/alba-automation-workflow-v2.png",
         imageFit: "contain",
         imageAspect: "video",
@@ -71,7 +73,7 @@ const chapters: Chapter[] = [
       {
         title: "Job Landing OS",
         caption:
-          "An AI-assisted execution system for collecting job information, filtering opportunities, preparing materials, and reviewing application progress.",
+          "A personal job search workflow turned into an AI-assisted execution system. Job information, opportunity filtering, application materials, tracking, and review were organized into one loop. Repetitive execution was reduced so attention could return to judgment, fit, and direction.",
         image: "/images/projects/job-landing-os-workflow-v2.png",
         imageFit: "contain",
         imageAspect: "video",
@@ -90,17 +92,19 @@ const chapters: Chapter[] = [
     ],
     projects: [
       {
-        title: "Drone Data Pipeline",
-        caption: "Using UAV systems to collect, process, and understand spatial data.",
-        image: "/images/project-drone-research.png",
-        href: "https://dl.acm.org/doi/abs/10.1145/3671127.3698172",
-      },
-      {
         title: "ICON Drone Demo",
-        caption: "Drone demo footage from ICON Lab work.",
+        caption:
+          "Systems thinking moved from screens into physical environments. UAV systems were built and tested for indoor and outdoor inspection scenarios. Hardware, flight behavior, safety, and data collection had to work together under real constraints.",
         image: "/images/project-drone-research.png",
         videoEmbedUrl:
           "https://player.vimeo.com/video/1194562828?title=0&byline=0&portrait=0&badge=0&autopause=0",
+      },
+      {
+        title: "Drone Data Pipeline",
+        caption:
+          "Field data became a repeatable pipeline for analysis and understanding. Data acquisition, processing, visualization, and experiment feedback were connected into one workflow. Difficult spaces became easier to measure, reconstruct, and learn from.",
+        image: "/images/project-drone-research.png",
+        href: "https://dl.acm.org/doi/abs/10.1145/3671127.3698172",
       },
     ],
   },
@@ -122,7 +126,8 @@ const chapters: Chapter[] = [
     projects: [
       {
         title: "\u56db\u6642 Si Shi",
-        caption: "A reflection on time, rhythm, and seasonal experience through digital space.",
+        caption:
+          "A digital space for exploring time, rhythm, and seasonal experience. Interaction and visual atmosphere turn cultural perception into a spatial interface. Systems become a medium for attention, aesthetics, and meaning.",
         image: "/images/project-si-shi.png",
         imageFit: "contain",
         imageAspect: "video",
@@ -130,7 +135,8 @@ const chapters: Chapter[] = [
       },
       {
         title: "More exciting projects are coming soon",
-        caption: "Additional explorations will be added here soon.",
+        caption:
+          "A space for reflective, experimental, and philosophical projects. Some may be technically simple, but conceptually more personal. The focus shifts from what systems do to what systems make possible.",
         image: "/images/project-more-exciting-coming-soon.png",
         imageFit: "contain",
       },
@@ -198,13 +204,13 @@ function AtmosphericSection({
   return (
     <section
       id={id}
-      className="snap-section relative min-h-screen overflow-hidden"
+      className="atmospheric-section snap-section relative min-h-screen overflow-hidden"
       data-scroll-section
       data-scroll-order={scrollOrder}
     >
       <Image src={image} alt="" fill sizes="100vw" className="object-cover" />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,245,237,0.94),rgba(248,245,237,0.64)_42%,rgba(248,245,237,0.12)),linear-gradient(180deg,rgba(248,245,237,0.15),rgba(248,245,237,0.28))]" />
-      <div className="relative mx-auto flex min-h-screen max-w-6xl items-center justify-start px-6 py-24 sm:px-10">
+      <div className="atmospheric-content relative mx-auto flex min-h-screen max-w-6xl items-center justify-start px-6 py-24 sm:px-10">
         <div className="max-w-[560px] text-[clamp(1rem,1.45vw,1.24rem)] leading-[1.72] text-[var(--text-main)]">
           {children}
         </div>
@@ -289,11 +295,75 @@ function ProjectMomentView({ project, index }: { project: ProjectMoment; index: 
   );
 }
 
+function projectCaptionLines(caption: string) {
+  return caption.match(/[^.]+(?:\.|$)/g)?.map((line) => line.trim()).filter(Boolean) ?? [caption];
+}
+
+function MobileProjectMomentView({ chapter, project }: { chapter: Chapter; project: ProjectMoment }) {
+  const mediaClassName = `mobile-project-media ${
+    project.imageAspect === "video" || project.videoEmbedUrl ? "mobile-project-media-video" : "mobile-project-media-wide"
+  }`;
+
+  return (
+    <section className="mobile-project-screen snap-section" data-scroll-section>
+      <div className="mobile-chapter-bar">{chapter.title}</div>
+      <article className="mobile-project-content">
+        <div className={mediaClassName}>
+          {project.videoEmbedUrl ? (
+            <iframe
+              src={project.videoEmbedUrl}
+              title={project.title}
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              allowFullScreen
+              referrerPolicy="strict-origin-when-cross-origin"
+              className="absolute inset-0 h-full w-full"
+            />
+          ) : (
+            <Image src={project.image} alt="" fill sizes="100vw" className="object-contain" />
+          )}
+        </div>
+        <h3>{project.title}</h3>
+        <div className="mobile-project-description">
+          {projectCaptionLines(project.caption).map((line) => (
+            <p key={line}>{line}</p>
+          ))}
+        </div>
+        {project.href ? (
+          <a href={project.href} target="_blank" rel="noreferrer">
+            View project {"\u2197"}
+          </a>
+        ) : null}
+      </article>
+    </section>
+  );
+}
+
+function MobileChapterSection({ chapter }: { chapter: Chapter }) {
+  return (
+    <section className="mobile-chapter-section lg:hidden">
+      <section className="mobile-chapter-intro snap-section" data-scroll-section>
+        <div>
+          <p>{chapter.number}</p>
+          <h2>{chapter.title}</h2>
+          <div>
+            {chapter.text.map((line) => (
+              <p key={line}>{line}</p>
+            ))}
+          </div>
+        </div>
+      </section>
+      {chapter.projects.map((project) => (
+        <MobileProjectMomentView key={project.title} chapter={chapter} project={project} />
+      ))}
+    </section>
+  );
+}
+
 function ChapterSection({ chapter, orderStart }: { chapter: Chapter; orderStart: number }) {
   const projectColumn = (
     <div className={`${chapter.reverse ? "lg:order-1" : "lg:order-2"} lg:col-span-1`}>
       {chapter.projects.map((project, index) => (
-        <div key={project.title} data-scroll-section data-scroll-order={orderStart + index}>
+        <div key={project.title} className="hidden lg:block" data-scroll-section data-scroll-order={orderStart + index}>
           <ProjectMomentView project={project} index={index} />
         </div>
       ))}
@@ -307,16 +377,18 @@ function ChapterSection({ chapter, orderStart }: { chapter: Chapter; orderStart:
   );
 
   return (
-    <section
-      id={chapter.id}
-      className="chapter-section relative"
-      style={{ minHeight: `${Math.max(chapter.projects.length, 1) * 100}vh` }}
-    >
-      <div className="chapter-grid grid min-h-screen gap-12 px-6 sm:px-10 lg:grid-cols-2 lg:gap-0 lg:px-0">
-        {textColumn}
-        {projectColumn}
-      </div>
-    </section>
+    <div id={chapter.id}>
+      <section
+        className="chapter-section relative hidden lg:block"
+        style={{ minHeight: `${Math.max(chapter.projects.length, 1) * 100}vh` }}
+      >
+        <div className="chapter-grid grid min-h-screen gap-12 px-6 sm:px-10 lg:grid-cols-2 lg:gap-0 lg:px-0">
+          {textColumn}
+          {projectColumn}
+        </div>
+      </section>
+      <MobileChapterSection chapter={chapter} />
+    </div>
   );
 }
 
