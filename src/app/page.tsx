@@ -182,7 +182,15 @@ function AboutSection() {
             fill
             priority
             sizes="(min-width: 1024px) 32vw, 92vw"
-            className="about-image object-cover"
+            className="about-image about-image-desktop object-cover"
+          />
+          <Image
+            src="/images/about-mobile-architecture.png"
+            alt=""
+            fill
+            priority
+            sizes="92vw"
+            className="about-image about-image-mobile object-cover"
           />
         </div>
       </div>
@@ -350,6 +358,9 @@ function MobileChapterSection({ chapter }: { chapter: Chapter }) {
               <p key={line}>{line}</p>
             ))}
           </div>
+        </div>
+        <div className="mobile-chapter-compress-bar" aria-hidden="true">
+          {chapter.title}
         </div>
       </section>
       {chapter.projects.map((project) => (
